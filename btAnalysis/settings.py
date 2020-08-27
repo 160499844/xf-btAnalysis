@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mongoengine',
     'app',
 ]
 
@@ -75,13 +76,31 @@ WSGI_APPLICATION = 'btAnalysis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+MONGODB_DATABASES = {
+    "default": {
+        "name": "xf_web",
+        "port":  27017,
+        "username":  "xiaofeng_test",
+        "password":  "test123456!@#",
+        "host": '47.101.38.62',
+        "tz_aware": True, # 设置时区
+    },
+}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.dummy'
     }
 }
 
+from mongoengine import connect
+connect(name='xf_web', host='47.101.38.62',port=27017,username="xiaofeng_test",password="test123456!@#")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
