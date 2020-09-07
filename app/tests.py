@@ -16,6 +16,7 @@ def testSearchTorrentFile():
         #遍历每个种子文件
         #print(item)
         #组装信息
+        fpath, fname = os.path.split(item)  # 分离文件名和路径
         try:
 
             info = getInfo(item)
@@ -31,22 +32,28 @@ def testSearchTorrentFile():
                 print(item)
                 print(data_length_)
                 print(data_files_)
-                print("---------------------------------------------------------")
 
                 #移动到指定目录
-                shutil.move(item, to_path + data_name_ + '.torrent')
+                shutil.move(item, to_path + fname)
+                print("[success]移动文件 %s -> %s" %(item,to_path + fname))
+
+                saveToDate()
             else:
                 #无法获取信息
                 # 移动到指定目录
-                item_name = str(item).split("\\")[-1]
-                shutil.move(item, fail_path + item_name)
+                shutil.move(item, fail_path + fname)
+                print("[error]移动文件 %s -> %s" % (item, fail_path + fname))
         except Exception as e:
 
             print(e)
             # 移动到指定目录
-            item_name = str(item).split("\\")[-1]
-            shutil.move(item, fail_path + item_name)
+            shutil.move(item, fail_path + fname)
+            print("[error]移动文件 %s -> %s" % (item, fail_path + fname))
+        print("---------------------------------------------------------")
 
+def saveToDate():
+    """数据处理"""
+    pass
 
 def findAllFile(base):
     """获取种子文件"""
